@@ -12,7 +12,7 @@
       @include('backend.v1.templates.inc.navbar')
       <div id="content">
 
-        <div class="container-fluid conatiner" id="container-wrapper">
+        <div class="container-fluid" id="container-wrapper">
           {{-- isi content --}}
           @yield('content')
         </div>

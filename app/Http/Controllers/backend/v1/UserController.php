@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kegiatan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('backend.v1.pages.user.index');
+        $data['users'] = User::all();
+        return view('backend.v1.pages.user.index', $data);
     }
 
     /**
@@ -25,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.v1.pages.user.create');
     }
 
     /**
@@ -36,7 +38,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nip' => 'required',
+            'nama' => 'required',
+            'rule' => 'required',
+            'jabatan' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        $data = $request->all();
+        $data['password'] = bcrypt($request->password);
+        User::create($data);
+
+        return to_route('user.index')->with('success', 'User Berhasil di Tambah');
     }
 
     /**
@@ -58,7 +73,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $data['user'] = $user;
+        return view('backend.v1.pages.user.edit', $data);
     }
 
     /**
@@ -70,7 +86,20 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'nip' => 'required',
+            'nama' => 'required',
+            'rule' => 'required',
+            'jabatan' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        $data = $request->all();
+        $data['password'] = bcrypt($request->password);
+        $user->update($data);
+
+        return to_route('user.index')->with('success', 'User Berhasil di Perbaharui');
     }
 
     /**
@@ -81,6 +110,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return to_route('user.index')->with('success', 'User Berhasil di Hapus');
     }
 }

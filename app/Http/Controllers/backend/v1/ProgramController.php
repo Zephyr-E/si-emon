@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,14 +44,11 @@ class ProgramController extends Controller
             'nama' => 'required',
             'tahun' => 'required',
             'indikator' => 'required',
-            'satuan_indikator' => 'required',
-            'target_satuan' => 'required',
+            'otorisasi' => 'required'
         ]);
 
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
         Program::create($data);
-
         return to_route('program.index')->with('success', 'Program Berhasil di Tambah');
     }
 
@@ -91,12 +89,10 @@ class ProgramController extends Controller
             'nama' => 'required',
             'tahun' => 'required',
             'indikator' => 'required',
-            'satuan_indikator' => 'required',
-            'target_satuan' => 'required',
+            'otorisasi' => 'required'
         ]);
 
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
         $program->update($data);
 
         return to_route('program.index')->with('success', 'Program Berhasil di Perbaharui');

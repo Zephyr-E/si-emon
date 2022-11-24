@@ -21,8 +21,10 @@
                             <th>Program</th>
                             <th>Tahun</th>
                             <th class="text-nowrap">Indikator Program</th>
-                            <th class="text-nowrap">Target Fisik</th>
+                            <th class="text-nowrap">Target</th>
                             <th>Satuan</th>
+                            <th>Pagu</th>
+                            <th>Kepala Dinas</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,8 +52,10 @@
                             <td>{{ $program->kode ." - ". $program->nama }}</td>
                             <td>{{ $program->tahun }}</td>
                             <td>{{ $program->indikator }}</td>
-                            <td>{{ $program->satuan_indikator }}</td>
-                            <td>{{ $program->target_satuan }}</td>
+                            <td>{{ $program->target }}</td>
+                            <td>{{ $program->satuan }}</td>
+                            <td>@currency($program->pagu)</td>
+                            <td>{{ $program->otorisasi }}</td>
                         </tr>
                         @endforeach
                     </tbody>

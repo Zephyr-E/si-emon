@@ -21,19 +21,26 @@
             <div class="form-group">
                 <label for="indikator">Indikator</label>
                 <textarea name="indikator" class="form-control" id="indikator" id="indikator" cols="30" rows="5"
-                required></textarea>
+                    required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="target">Target</label>
+                <input type="text" class="form-control" name="target" id="target" placeholder="Masukkan Target"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="satuan">Satuan</label>
+                <input type="text" class="form-control" name="satuan" id="satuan" placeholder="Masukkan Satuan"
+                    required>
             </div>
             <div class="form-group">
                 <label for="pagu">Pagu</label>
                 <input type="number" class="form-control" name="pagu" id="pagu" placeholder="Masukkan Pagu" required>
             </div>
             <div class="form-group">
-                <label for="satuan_indikator">Target Fisik</label>
-                <input type="text" class="form-control" name="satuan_indikator" id="satuan_indikator" placeholder="Masukkan Target Fisik" required>
-            </div>
-            <div class="form-group">
-                <label for="target_satuan">Satuan</label>
-                <input type="text" class="form-control" name="target_satuan" id="target_satuan" placeholder="Masukkan Satuan" required>
+                <label for="otorisasi">Otorisasi</label>
+                <input type="text" class="form-control" name="otorisasi" id="otorisasi" placeholder="Masukkan Otorisasi"
+                    required>
             </div>
             <div class="form-group pt-3">
                 <button class="btn btn-primary">Simpan</button>

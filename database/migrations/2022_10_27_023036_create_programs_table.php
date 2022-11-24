@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('kode');
             $table->string('nama');
             $table->string('tahun');
             $table->string('indikator');
-            $table->string('satuan_indikator');
-            $table->string('pagu');
-            $table->string('target_satuan');
+            $table->string('target')->nullable();
+            $table->string('satuan')->nullable();
+            $table->string('pagu')->nullable();
+            $table->string('otorisasi');
             $table->timestamps();
         });
     }

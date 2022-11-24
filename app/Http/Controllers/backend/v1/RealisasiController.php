@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\backend\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kegiatan;
 use App\Models\Realisasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RealisasiController extends Controller
 {
@@ -15,7 +17,13 @@ class RealisasiController extends Controller
      */
     public function index()
     {
-        return view('backend.v1.pages.realisasi.index');
+        $data['realisasis'] = Realisasi::all();
+        if (Auth::user()->rule == 'Admin') {
+            return view('backend.v1.pages.realisasi.admin.index', $data);
+        } else {
+            $data['kegiatans'] = Kegiatan::where('user_id', '=', Auth::user()->id)->get();
+            return view('backend.v1.pages.realisasi.user.index', $data);
+        }
     }
 
     /**
@@ -25,7 +33,31 @@ class RealisasiController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::user()->rule == 'User') {
+            $month = date('m');
+            $data['triwulan'] = 0;
+
+            if ($month < 4) {
+                $data['triwulan'] = 1;
+            } elseif ($month < 7) {
+                $data['triwulan'] = 2;
+            } elseif ($month < 10) {
+                $data['triwulan'] = 3;
+            } else {
+                $data['triwulan'] = 4;
+            }
+
+            $kegiatan = Kegiatan::where('user_id', '=', Auth::user()->id)->get();
+            $data['kegiatans'] = $kegiatan;
+            
+            $data['pagu'] = $kegiatan[0]->pagu;
+            $data['target'] = $kegiatan[0]->target;
+            $data['satuan'] = $kegiatan[0]->satuan;
+            $data['terserap'] = $kegiatan[0]->realisasi->sum('pagu');
+            $data['sisa'] = $data['pagu'] - $data['terserap'];
+
+            return view('backend.v1.pages.realisasi.user.create', $data);
+        }
     }
 
     /**
@@ -36,7 +68,20 @@ class RealisasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kegiatan_id' => 'required',
+            'tanggal' => 'required',
+            'triwulan' => 'required',
+            'target' => 'required',
+            'satuan' => 'required',
+            'pagu' => 'required',
+            'keterangan' => 'required',
+        ]);
+
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        Realisasi::create($data);
+        return to_route('realisasi.index')->with('success', 'Realisasi Berhasil di Tambah');
     }
 
     /**
@@ -58,7 +103,32 @@ class RealisasiController extends Controller
      */
     public function edit(Realisasi $realisasi)
     {
-        //
+        if (Auth::user()->rule == 'User') {
+            $month = date('m');
+            $data['triwulan'] = 0;
+
+            if ($month < 4) {
+                $data['triwulan'] = 1;
+            } elseif ($month < 7) {
+                $data['triwulan'] = 2;
+            } elseif ($month < 10) {
+                $data['triwulan'] = 3;
+            } else {
+                $data['triwulan'] = 4;
+            }
+
+            $kegiatan = Kegiatan::where('user_id', '=', Auth::user()->id)->get();
+            $data['kegiatans'] = $kegiatan;
+            $data['pagu'] = $kegiatan[0]->pagu;
+            $data['target'] = $kegiatan[0]->target;
+            $data['satuan'] = $kegiatan[0]->satuan;
+            $data['terserap'] = $kegiatan[0]->realisasi->sum('pagu');
+            $data['sisa'] = $data['pagu'] - $data['terserap'];
+
+            $data['realisasi'] = $realisasi;
+            
+            return view('backend.v1.pages.realisasi.user.edit', $data);
+        }
     }
 
     /**
@@ -70,7 +140,21 @@ class RealisasiController extends Controller
      */
     public function update(Request $request, Realisasi $realisasi)
     {
-        //
+        $request->validate([
+            'kegiatan_id' => 'required',
+            'tanggal' => 'required',
+            'triwulan' => 'required',
+            'target' => 'required',
+            'satuan' => 'required',
+            'pagu' => 'required',
+            'keterangan' => 'required',
+        ]);
+
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        $realisasi->update($data);
+
+        return to_route('realisasi.index')->with('success', 'Realisasi Berhasil di Perbaharui');
     }
 
     /**
@@ -81,6 +165,7 @@ class RealisasiController extends Controller
      */
     public function destroy(Realisasi $realisasi)
     {
-        //
+        $realisasi->delete();
+        return to_route('realisasi.index')->with('success', 'Realisasi Berhasil di Hapus');
     }
 }

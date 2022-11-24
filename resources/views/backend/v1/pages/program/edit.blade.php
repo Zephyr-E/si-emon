@@ -9,32 +9,43 @@
             @method('patch')
             <div class="form-group">
                 <label for="kode">Kode</label>
-                <input type="text" class="form-control" name="kode" id="kode" placeholder="Masukkan Kode" value="{{ $program->kode }}" required>
+                <input type="text" class="form-control" name="kode" id="kode" placeholder="Masukkan Kode"
+                    value="{{ $program->kode }}" required>
             </div>
             <div class="form-group">
                 <label for="nama">Program</label>
-                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Program" value="{{ $program->nama }}" required>
+                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Program"
+                    value="{{ $program->nama }}" required>
             </div>
             <div class="form-group">
                 <label for="tahun">Tahun</label>
-                <input type="text" class="form-control" name="tahun" id="tahun" placeholder="Masukkan Tahun" value="{{ $program->tahun }}" required>
+                <input type="text" class="form-control" name="tahun" id="tahun" placeholder="Masukkan Tahun"
+                    value="{{ $program->tahun }}" required>
             </div>
             <div class="form-group">
                 <label for="indikator">Indikator</label>
                 <textarea name="indikator" class="form-control" id="indikator" id="indikator" cols="30" rows="5"
-                required>{{ $program->indikator }}</textarea>
+                    required>{{ $program->indikator }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="target">Target</label>
+                <input type="text" class="form-control" name="target" id="target" placeholder="Masukkan Target"
+                    value="{{ $program->target }}" required>
+            </div>
+            <div class="form-group">
+                <label for="satuan">Satuan</label>
+                <input type="text" class="form-control" name="satuan" id="satuan" placeholder="Masukkan Satuan"
+                    value="{{ $program->satuan }}" required>
             </div>
             <div class="form-group">
                 <label for="pagu">Pagu</label>
-                <input type="number" class="form-control" name="pagu" id="pagu" placeholder="Masukkan Pagu" value="{{ $program->pagu }}" required>
+                <input type="number" class="form-control" name="pagu" id="pagu" placeholder="Masukkan Pagu"
+                    value="{{ $program->pagu }}" required>
             </div>
             <div class="form-group">
-                <label for="satuan_indikator">Target Fisik</label>
-                <input type="text" class="form-control" name="satuan_indikator" id="satuan_indikator" placeholder="Masukkan Target Fisik" value="{{ $program->satuan_indikator }}" required>
-            </div>
-            <div class="form-group">
-                <label for="target_satuan">Satuan</label>
-                <input type="text" class="form-control" name="target_satuan" id="target_satuan" placeholder="Masukkan Satuan" value="{{ $program->target_satuan }}" required>
+                <label for="otorisasi">Otorisasi</label>
+                <input type="text" class="form-control" name="otorisasi" id="otorisasi" placeholder="Masukkan Otorisasi"
+                    value="{{ $program->otorisasi }}" required>
             </div>
             <div class="form-group pt-3">
                 <button class="btn btn-primary">Perbaharui</button>
