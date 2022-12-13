@@ -92,14 +92,10 @@
             @csrf
             <input type="date" name="tanggal" value="{{ date('Y-m-d') }}" hidden>
             <input type="text" name="triwulan" value="{{ $triwulan }}" hidden>
+            <input type="text" name="kegiatan_id" value="{{ $kegiatan->id }}" hidden>
             <div class="form-group">
-                <label for="kegiatan_id">Kegiatan</label>
-                <select class="selectpicker form-control" name="kegiatan_id" id="kegiatan_id" required>
-                    <option value="">Pilih</option>
-                    @foreach ($kegiatans as $kegiatan)
-                    <option value="{{ $kegiatan->id }}">{{ $kegiatan->kode .' - '. $kegiatan->nama }}</option>
-                    @endforeach
-                </select>
+                <label>Kegiatan</label>
+                <input type="text" class="form-control" readonly required value="{{ $kegiatan->kode .' - '. $kegiatan->nama }}">
             </div>
             <div class="form-group">
                 <label for="pagu">Pagu</label>

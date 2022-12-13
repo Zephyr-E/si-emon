@@ -30,6 +30,7 @@ Route::middleware([
     Route::resource('program', ProgramController::class);
     Route::resource('kegiatan', KegiatanController::class);
     Route::resource('realisasi', RealisasiController::class);
+    Route::get('realisasi-kegiatan', [RealisasiController::class, 'pilihKegiatan'])->name('realisasi.realisasi-kegiatan');
     Route::resource('user', UserController::class);
 
     Route::get('report', [ReportController::class, 'index'])->name('report');

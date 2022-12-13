@@ -26,11 +26,8 @@
             </div>
             <div class="form-group">
                 <label for="jabatan">Jabatan</label>
-                <select class="selectpicker form-control" name="jabatan" id="jabatan" required>
-                    <option value="">Pilih</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Kepala Bidang">Kepala Bidang</option>
-                </select>
+                <input type="text" class="form-control" name="jabatan" id="jabatan" placeholder="Masukkan Jabatan"
+                    required>
             </div>
             <div class="form-group">
                 <label for="rule">Rule</label>

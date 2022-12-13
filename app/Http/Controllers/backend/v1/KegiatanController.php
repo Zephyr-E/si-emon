@@ -29,7 +29,7 @@ class KegiatanController extends Controller
     public function create()
     {
         $data['programs'] = Program::all();
-        $data['users'] = User::where('jabatan', '=', 'Kepala Bidang')->get();
+        $data['users'] = User::where('rule', '=', 'User')->get();
         return view('backend.v1.pages.kegiatan.create', $data);
     }
 
@@ -48,6 +48,16 @@ class KegiatanController extends Controller
             'indikator' => 'required',
             'user_id' => 'required'
         ]);
+
+        $data['program'] = Program::where('id', $request->program_id)->first();
+        $data['pagu'] = $data['program']->pagu;
+        $data['terserap'] = $data['program']->kegiatan->sum('pagu');
+        $data['sisa'] = $data['pagu'] - $data['terserap'];
+
+        // bila pagu yang di input melebihi sisa pagu program maka dianggap gagal
+        if ($request->pagu > $data['sisa']) {
+            return to_route('kegiatan.create')->with('failed', 'Pagu Yang Dimasukkan melebihi Batas Anggaran Program');
+        }
 
         $data = $request->all();
         Kegiatan::create($data);
@@ -76,7 +86,7 @@ class KegiatanController extends Controller
     {
         $data['kegiatan'] = $kegiatan;
         $data['programs'] = Program::all();
-        $data['users'] = User::where('jabatan', '=', 'Kepala Bidang')->get();
+        $data['users'] = User::where('rule', '=', 'User')->get();
         return view('backend.v1.pages.kegiatan.edit', $data);
     }
 
@@ -96,6 +106,16 @@ class KegiatanController extends Controller
             'indikator' => 'required',
             'user_id' => 'required'
         ]);
+
+        $data['program'] = Program::where('id', $request->program_id)->first();
+        $data['pagu'] = $data['program']->pagu;
+        $data['terserap'] = $data['program']->kegiatan->where('id', '!=', $kegiatan->id)->sum('pagu');
+        $data['sisa'] = $data['pagu'] - $data['terserap'];
+
+        // bila pagu yang di input melebihi sisa pagu program maka dianggap gagal
+        if ($request->pagu > $data['sisa']) {
+            return to_route('kegiatan.edit', $kegiatan->id)->with('failed', 'Pagu Yang Dimasukkan melebihi Batas Anggaran Program');
+        }
 
         $data = $request->all();
         $kegiatan->update($data);

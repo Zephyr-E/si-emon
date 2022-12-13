@@ -4,9 +4,11 @@
 <div class="row">
     <!-- Datatables -->
     <div class="col-lg-12">
-        <a href="{{ route('realisasi.create') }}" class="btn btn-primary btn-add text-white">
+        @if (count(Auth::user()->kegiatan) != 0)            
+        <a href="{{ route('realisasi.realisasi-kegiatan') }}" class="btn btn-primary btn-add text-white">
             <i class="fas fa-plus fa-sm"></i> Tambah Realisasi
         </a>
+        @endif
         <div class="card mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Realisasi</h6>

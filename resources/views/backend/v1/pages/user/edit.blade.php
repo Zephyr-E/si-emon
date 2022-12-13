@@ -29,12 +29,8 @@
             </div>
             <div class="form-group">
                 <label for="jabatan">Jabatan</label>
-                <select class="selectpicker form-control" name="jabatan" id="jabatan">
-                    <option value="">Pilih</option>
-                    <option value="Admin" {{ ($user->jabatan == 'Admin') ? 'selected' : '' }}>Admin</option>
-                    <option value="Kepala Bidang" {{ ($user->jabatan == 'Kepala Bidang') ? 'selected' : '' }}>Kepala
-                        Bidang</option>
-                </select>
+                <input type="text" class="form-control" name="jabatan" id="jabatan" placeholder="Masukkan Jabatan"
+                    value="{{ $user->jabatan }}" required>
             </div>
             <div class="form-group">
                 <label for="rule">Rule</label>
